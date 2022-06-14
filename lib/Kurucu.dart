@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobil/main.dart';
 
 class Kurucu extends StatefulWidget {
   const Kurucu({Key? key}) : super(key: key);
@@ -45,15 +43,6 @@ AMAÇLARIMIZ
               ),
             ),
           ),
-
-          RaisedButton(
-            child: Text('Anasayfaya git'),
-            onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Anasayfa()));
-
-            },
-          ),
-
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );

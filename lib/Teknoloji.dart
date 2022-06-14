@@ -1,6 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:like_button/like_button.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'data/teknoloji_service.dart';
+import 'models/TeknolojiArticles.dart';
 
 
 
@@ -12,78 +14,69 @@ class Teknoloji extends StatefulWidget {
 }
 
 class _TeknolojiState extends State<Teknoloji> {
+  int eklesayi = 0;
+  List<Articles> articles = [];
+
+  @override
+  void initState() {
+    NewsService.getNews().then((value) {
+      setState(() {
+        articles = value!;
+      });
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightGreen,
+      backgroundColor: Colors.lightBlue,
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.lightBlue,
         title: Center(child: Text('TEKNOLOJİ')),
       ),
       body: Center(
         child: ListView.builder(
-            itemCount: 1,
-            itemBuilder: (context,index){
+            itemCount: articles.length,
+            itemBuilder: (context, index){
               return Card(
-                child: Column(
-                  children: [
-                    Image.asset('assets/images/teknoshift.jpg'),
-                    ListTile(
-                      leading: Icon(Icons.arrow_circle_down),
-                      title: Text('SHİFTDELETE.NET SİTESİ'),
-                      subtitle: Text('YAZAR'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(('AÇIKLAMA HABER AÇIKLAMASI')
-                      ),
-                    ),
-                    TextButton(onPressed: (){
-                      Navigator.pop(context);
-                      urlTekno('https://shiftdelete.net/teknoloji-haberleri');
-                    }, child: Text('HABER İÇİN TIKLAYIN')),
-                    Divider(
-                      height: 20,
-                    ),
-                    Image.asset('assets/images/webteknoo.jpg'),
-                    ListTile(
-                      leading: Icon(Icons.arrow_circle_down),
-                      title: Text('WEBTWKNO HABER SİTESİ'),
-                      subtitle: Text('YAZAR'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(('AÇIKLAMA HABER AÇIKLAMASI')
-                      ),
-                    ),
-                    TextButton(onPressed: (){
-                      Navigator.pop(context);
-                      urlTekno('https://www.webtekno.com/');
-                    }, child: Text('HABER İÇİN TIKLAYIN')),
-                    Divider(
-                      height: 15,
-                    ),
-                    Image.asset('assets/images/donanim.png'),
-                    ListTile(
-                      leading: Icon(Icons.arrow_circle_down),
-                      title: Text('DONANIM HABER SİTESİ'),
-                      subtitle: Text('YAZAR'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(('AÇIKLAMA HABER AÇIKLAMASI')
-                      ),
-                    ),
-                    TextButton(onPressed: (){
-                      Navigator.pop(context);
-                      urlTekno('https://www.donanimhaber.com/teknoloji-haberleri');
-                    }, child: Text('HABER İÇİN TIKLAYIN')),
-                    Divider(
-                      height: 20,
-                    ),
-                ]
-                ),
-
+                  child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: 350),
+                          child: LikeButton(
+                            size: 30,
+                            likeCount: eklesayi,
+                            countPostion: CountPostion.bottom,
+                            likeBuilder: (isTapped) {
+                              return Icon(
+                                Icons.bookmark,
+                                color: isTapped ? Colors.deepPurpleAccent: Colors.grey,
+                                size: 30,
+                              );
+                            },
+                          ),
+                        ),
+                        Image.network(articles[index].urlToImage.toString()),
+                        ListTile(
+                          leading: Icon(Icons.arrow_circle_down),
+                          title: Text(articles[index].title.toString()),
+                          subtitle: Text(articles[index].author.toString()),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Text((articles[index].description.toString())),
+                        ),
+                        ButtonBar(
+                          alignment: MainAxisAlignment.start,
+                          children: [
+                            MaterialButton(
+                                onPressed: () async {
+                                  await launch(articles[index].url.toString());
+                                },
+                                child: Text('Habere Git')),
+                          ],
+                        ),
+                      ])
               );
             }
 
@@ -91,12 +84,4 @@ class _TeknolojiState extends State<Teknoloji> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-}
-Future urlTekno ( String url) async{
-  if(await launch(url)) {
-    await launch(url);
-  }else{
-    debugPrint('Linki Açamadım');
-  }
-
 }

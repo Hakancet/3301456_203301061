@@ -1,5 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mobil/giris.dart';
+
 
 class Profil extends StatefulWidget {
   const Profil({Key? key}) : super(key: key);
@@ -9,8 +11,12 @@ class Profil extends StatefulWidget {
 }
 
 class kisi extends State<Profil> {
+  var name;
+
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       backgroundColor: Colors.amber,
       appBar: AppBar(
@@ -18,15 +24,20 @@ class kisi extends State<Profil> {
         title: Center(child: Text('PROFİL')),
       ),
       body: Center(
-
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            CircleAvatar(
-              radius: 90.0,
-              backgroundColor: Colors.blue,
-              backgroundImage: AssetImage('assets/images/polat.jpg'),
-            ),
+           Divider(
+             height: 20,
+           ),
+           Card(
+             margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+             color: Colors.amber,
+             child: Center(
+               child: Text('MÜKEMMEL UYGULAMANIN MÜKEMMEL KULLANICISI                               ',
+               style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.w600 , ),),
+             ),
+           ),
            Divider(
              height: 20,
            ),
@@ -43,7 +54,7 @@ class kisi extends State<Profil> {
                    width: 10.0,
                  ),
                  Text(
-                   'polatalemdardead@gmail.com',
+                   user!.email.toString(),
                    style: TextStyle(color: Colors.green,
                      fontSize: 20.0
                    ),
@@ -55,29 +66,36 @@ class kisi extends State<Profil> {
              height: 20,
            ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.0),
+              margin: EdgeInsets.symmetric(horizontal: 15.0),
               color: Colors.black,
-              padding: EdgeInsets.all(20.0),
+              padding: EdgeInsets.all(15.0),
               child: Row(
                 children: [
-                  Icon(Icons.phone,
+                  Icon(Icons.exit_to_app,
                     color: Colors.green,
                   ),
                   SizedBox(
                     width: 10.0,
                   ),
-                  Text(
-                    '+90 565 342 6592',
-                    style: TextStyle(color: Colors.green,
-                        fontSize: 20.0
+                  TextButton(
+                    child: Text(
+                      'ÇIKMAK İÇİN TIKLAYIN',
+                      style: TextStyle(color: Colors.green,
+                          fontSize: 20.0
+                      ),
                     ),
+                    onPressed: (){
+                      FirebaseAuth.instance.signOut().then((value) => {
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> GirisSayfa()), (Route<dynamic> route) => false)
+                      });
+                    },
                   ),
                 ],
               ),
             ),
           ],
         ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
