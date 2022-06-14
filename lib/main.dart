@@ -3,12 +3,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mobil/SayfaA.dart';
 import 'package:mobil/data/auth_services.dart';
-import 'package:mobil/giris.dart';
 import 'package:mobil/karsilama.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+      options: FirebaseOptions(
+          apiKey: "AIzaSyAO6Wscw94H6fW9BybTlea7UIm5a5UXHPc",
+          appId: "1:488480931635:android:21e29ab603b9762d380846",
+          messagingSenderId: "",
+          projectId: "newslab2-f1cef")
+  );
   runApp(const MyApp());
 }
 var auth = AuthService();
