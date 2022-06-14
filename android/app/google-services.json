@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "488480931635",
+    "project_id": "newslab2-f1cef",
+    "storage_bucket": "newslab2-f1cef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488480931635:android:21e29ab603b9762d380846",
+        "android_client_info": {
+          "package_name": "com.example.mobil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "488480931635-5mufdu5v98ic6kb7gcrmk19qstl3ogcl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAO6Wscw94H6fW9BybTlea7UIm5a5UXHPc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "488480931635-5mufdu5v98ic6kb7gcrmk19qstl3ogcl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
